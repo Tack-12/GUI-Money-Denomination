@@ -1,44 +1,35 @@
 package money;
 
-import money.Denomination;
-import money.Purse;
-
-import java.util.Scanner;
-
 public class Register {
-
-    private static final Denomination[] denominations = {
-            new Denomination("Twenty Dollar Bill", 20.0, "bill", "twenty.jpg"),
-            new Denomination("Ten Dollar Bill", 10.0, "bill", "ten.jpg"),
-            new Denomination("Five Dollar Bill", 5.0, "bill", "five.jpg"),
-            new Denomination("One Dollar Bill", 1.0, "bill", "one.jpg"),
-            new Denomination("Quarter", 0.25, "coin", "quarter.jpg"),
-            new Denomination("Dime", 0.10, "coin", "dime.jpg"),
-            new Denomination("Nickel", 0.05, "coin", "nickel.jpg"),
-            new Denomination("Penny", 0.01, "coin", "penny.jpg")
+    private final Denomination[] denominations = {
+            new Denomination("Hundred Note", 100.0, "bill", "hundred.png"),
+            new Denomination("Fifty Note", 50.0, "bill", "fifty.png"),
+            new Denomination("Twenty Note", 20.0, "bill", "twenty.png"),
+            new Denomination("Ten Note", 10.0, "bill", "ten.png"),
+            new Denomination("Five Note", 5.0, "bill", "five.png"),
+            new Denomination("One Note", 1.0, "bill", "one.png"),
+            new Denomination("Quarter", 0.25, "coin", "quarter.png"),
+            new Denomination("Dime", 0.10, "coin", "dime.png"),
+            new Denomination("Nickel", 0.05, "coin", "nickel.png"),
+            new Denomination("Penny", 0.01, "coin", "penny.png"),
     };
 
-
-public Purse makeChange(double amt) {
-    Purse purse = new Purse();
-    for (Denomination denom : Register.denominations) {
-        int count = (int) (amt / denom.amt());
-        if (count > 0) {
-            purse.add(denom, count);
-            amt -= count * denom.amt();
+    public Purse makeChange(double amt) {
+        Purse purse = new Purse();
+        for (Denomination denom : denominations) {
+            int count = (int) (amt / denom.amt());
+            if (count > 0) {
+                purse.add(denom, count);
+                amt -= count * denom.amt();
+                amt = Math.round(amt * 100.0) / 100.0; // Avoid floating-point errors
+            }
         }
-        amt = Math.round(amt * 100.0) / 100.0; // Avoid precision issues
+        return purse;
     }
-    return purse;
-}
 
-public void main(String[] args) {
-    Register Register = new Register();
-    System.out.println("Enter the amount of money you would like to see:");
-    Scanner scanner = new Scanner(System.in);
-    Double amount = scanner.nextDouble();
-    Purse purse = Register.makeChange(amount);
-    System.out.println("Change for $" + amount + ":");
-    System.out.println(purse);
-}
+    public static void main(String[] args) {
+        Register register = new Register();
+        Purse purse = register.makeChange(287.38);
+        System.out.println(purse);
+    }
 }
