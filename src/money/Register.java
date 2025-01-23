@@ -3,17 +3,18 @@ package money;
 import java.util.Scanner;
 
 public class Register {
+    // Denomination with all the currency and their pic
     private final Denomination[] denominations = {
-            new Denomination("Hundred Note", 100.00, "bill", "src/images/100.png"),
-            new Denomination("Fifty Note", 50.00, "bill", "src/images/50.png"),
-            new Denomination("Twenty Note", 20.00, "bill", "src/images/20.png"),
-            new Denomination("Ten Note", 10.00, "bill", "src/images/10.png"),
-            new Denomination("Five Note", 5.00, "bill", "src/images/5.png"),
-            new Denomination("One Note", 1.00, "bill", "src/images/1.png"),
-            new Denomination("Quarter", 0.25, "coin", "src/images/quarter.png"),
-            new Denomination("Dime", 0.10, "coin", "src/images/dime.png"),
-            new Denomination("Nickel", 0.05, "coin", "src/images/nickle.png"),
-            new Denomination("Penny", 0.01, "coin", "src/images/penny.png"),
+            new Denomination("Hundred Note", 100.00, "bill", "100"),
+            new Denomination("Fifty Note", 50.00, "bill", "50"),
+            new Denomination("Twenty Note", 20.00, "bill", "20"),
+            new Denomination("Ten Note", 10.00, "bill", "10"),
+            new Denomination("Five Note", 5.00, "bill", "5"),
+            new Denomination("One Note", 1.00, "bill", "1"),
+            new Denomination("Quarter", 0.25, "coin", "quarter"),
+            new Denomination("Dime", 0.10, "coin", "dime"),
+            new Denomination("Nickel", 0.05, "coin", "nickle"),
+            new Denomination("Penny", 0.01, "coin", "penny"),
     };
 
     public Purse makeChange(double amt) {
@@ -37,16 +38,17 @@ public class Register {
     }
 
     public static void main(String[] args) {
+        //console version of code
         Register register = new Register();  // Initialize the Register object
         Scanner scanner = new Scanner(System.in);
         boolean continueProgram = true;
 
-        while (continueProgram) {
+        while (continueProgram) {   //Continue until user wants to quit
             System.out.println("Enter the amount of money you would like to see:");
             double amount = scanner.nextDouble();
 
-            // Exit if the user enters 0 or a negative value
-            if (amount <= 0) {
+            // Displays empty purse if the user enters 0 or a negative value
+            if (amount < 0.005) {
                 System.out.println("Empty Purse");
             } else {
                 Purse purse = register.makeChange(amount);
@@ -55,12 +57,13 @@ public class Register {
             }
 
             // Ask if the user wants to continue
-            System.out.println("\nWould you like to try another amount? (yes/no):");
+            System.out.println("\nWould you like to try run the money change again? (y/n):");
             String userResponse = scanner.next().trim().toLowerCase();
-            continueProgram = userResponse.equals("yes");
+            continueProgram = userResponse.equals("y");
         }
 
-        System.out.println("Bye, back to poor life!");
+        //exits code with a message
+        System.out.println("You chose to exit! Thank you for using Money Denomination!");
         scanner.close();
     }
 }

@@ -6,11 +6,14 @@ import java.util.Map;
 public class Purse {
     private final Map<Denomination, Integer> cash = new HashMap<>();
 
+    //adding cash to purse using denomation
     public void add(Denomination type, int num) {
         cash.put(type, cash.getOrDefault(type, 0) + num);
     }
 
+    //removes the cash in purse
     public double remove(Denomination type, int num) {
+        //fetching the cash amt from denomation
         if (!cash.containsKey(type) || cash.get(type) < num) {
             throw new IllegalArgumentException("Not enough of the denomination to remove.");
         }
@@ -22,6 +25,7 @@ public class Purse {
     }
 
     public double getValue() {
+        //returns value of the amount when called
         double value = cash.entrySet().stream()
                 .mapToDouble(e -> e.getKey().amt() * e.getValue())
                 .sum();
@@ -43,6 +47,7 @@ public class Purse {
     }
 
     @Override
+    //Creates the content and truns it to string
     public String toString() {
         StringBuilder sb = new StringBuilder("Purse contents:\n");
         for (var entry : cash.entrySet()) {

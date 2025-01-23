@@ -40,7 +40,7 @@ public class PursePanel extends JPanel {
             // Get the image for the denomination
             Image image;
             try {
-                image = Toolkit.getDefaultToolkit().getImage(denomination.img());
+                image = Toolkit.getDefaultToolkit().getImage("src/images/"+denomination.img()+".png");
             } catch (Exception e) {
                 image = null;
             }
