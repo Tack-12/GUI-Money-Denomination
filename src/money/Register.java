@@ -1,17 +1,18 @@
 package money;
 
+
 public class Register {
     private final Denomination[] denominations = {
-            new Denomination("Hundred Note", 100.0, "bill", "Images/100.jpg"),
-            new Denomination("Fifty Note", 50.0, "bill", "Images/50.jpg"),
-            new Denomination("Twenty Note", 20.0, "bill", "Images/20.jpg"),
-            new Denomination("Ten Note", 10.0, "bill", "Images/10.jpg"),
-            new Denomination("Five Note", 5.0, "bill", "Images/5.jpg"),
-            new Denomination("One Note", 1.0, "bill", "Images/1.jpg"),
-            new Denomination("Quarter", 0.25, "coin", "Images/quarter.jpg"),
-            new Denomination("Dime", 0.10, "coin", "Images/dime.jpg"),
-            new Denomination("Nickel", 0.05, "coin", "Images/nickel.jpg"),
-            new Denomination("Penny", 0.01, "coin", "Images/penny.jpg"),
+            new Denomination("Hundred Note", 100.0, "bill", "images/100.png"),
+            new Denomination("Fifty Note", 50.0, "bill", "images/50.png"),
+            new Denomination("Twenty Note", 20.0, "bill", "images/20.png"),
+            new Denomination("Ten Note", 10.0, "bill", "images/10.png"),
+            new Denomination("Five Note", 5.0, "bill", "images/5.png"),
+            new Denomination("One Note", 1.0, "bill", "images/1.png"),
+            new Denomination("Quarter", 0.25, "coin", "images/quarter.png"),
+            new Denomination("Dime", 0.10, "coin", "images/dime.png"),
+            new Denomination("Nickel", 0.05, "coin", "images/nickle.png"),
+            new Denomination("Penny", 0.01, "coin", "images/penny.png"),
     };
 
     public Purse makeChange(double amt) {
