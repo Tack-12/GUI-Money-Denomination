@@ -1,64 +1,65 @@
 package money;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.Map;
 
 public class PursePanel extends JPanel {
-    private Purse purse = new Purse(); // Initialize with an empty purse
+    private Purse purse = new Purse();
+
+    public PursePanel() {
+        // Set a light yellow background for the panel
+        setBackground(new Color(255, 255, 200)); // Light yellow
+    }
 
     public void setPurse(Purse purse) {
-        if (purse == null) {
-            throw new IllegalArgumentException("Purse cannot be null");
-        }
         this.purse = purse;
         repaint(); // Redraw the panel when the purse is updated
     }
 
     @Override
     protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
+        super.paintComponent(g); // Clear the panel before drawing
 
-        // Set up font and starting position for drawing text
-        g.setFont(new Font("Arial", Font.PLAIN, 14));
-        int y = 20; // Start drawing text 20 pixels down from the top
+        // Set the font to Times New Roman, bold
+        Font font = new Font("Times New Roman", Font.BOLD, 22);
+        g.setFont(font);
 
-        // Draw title
-        g.drawString("Purse Contents:", 10, y);
-        y += 20; // Move down for the next line
+        int y = 20; // Start drawing from the top
+        int imageSizex = 80; // Set a smaller size for individual coin images
+        int imageSizey = 60;
+        int imageSpacing = 90; // Spacing between images in a row
 
-        // Check if purse is empty
-        if (purse.getCash() == null || purse.getCash().isEmpty()) {
-            g.drawString("The purse is empty.", 10, y);
-            return; // Exit if there are no contents
-        }
-
-        // Iterate over the purse's contents and display them
         for (Map.Entry<Denomination, Integer> entry : purse.getCash().entrySet()) {
             Denomination denomination = entry.getKey();
             int count = entry.getValue();
 
-            // Skip null denominations
-            if (denomination == null) continue;
-
-            // Draw the denomination's name and count
+            // Draw the denomination name and count
             g.drawString(denomination.name() + ": " + count, 10, y);
-            y += 20; // Move down for the next line
 
-            // Load and draw the image for this denomination
-            Image image = denomination.getImage(); // Assumes this method is implemented in Denomination
-            int imageX = 150; // X position for the image
-            int imageY = y - 15; // Align image with text
-
+            // Get the image for the denomination
+            Image image;
+            try {
+                image = Toolkit.getDefaultToolkit().getImage(denomination.img());
+            } catch (Exception e) {
+                image = null;
+            }
 
             if (image != null) {
-                g.drawImage(image, imageX, imageY, 40, 40, this); // Draw the image (40x40 size)
+                // Draw the images based on the count
+                for (int i = 0; i < count; i++) {
+                    int x = 150 + (i % 8) * imageSpacing; // Arrange images in rows (8 per row)
+                    int rowOffset = (i / 8) * imageSizex; // Move to the next row if needed
+                    g.drawImage(image, x, y + rowOffset, imageSizex, imageSizey, this);
+                }
             } else {
-                g.drawString("[Image Missing]", imageX, imageY + 20);
+                g.drawString("[Image Missing]", 150, y);
             }
+
+            y += (count / 5 + 1) * imageSizey + 10; // Move down for the next denomination
         }
 
-        // Draw the total value of the purse
-        y += 20; // Move down
-        g.drawString("Total Value: $" + String.format("%.2f", purse.getValue()), 10, y);
+        // Draw total value
+        g.drawString("Total Value: $" + String.format("%.2f", purse.getValue()), 10, y + 20);
     }
 }

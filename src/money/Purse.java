@@ -22,7 +22,19 @@ public class Purse {
     }
 
     public double getValue() {
-        return cash.entrySet().stream().mapToDouble(e -> e.getKey().amt() * e.getValue()).sum();
+        double value = cash.entrySet().stream()
+                .mapToDouble(e -> e.getKey().amt() * e.getValue())
+                .sum();
+
+        // Round to 3 decimal places
+        value = Math.round(value * 1000.0) / 1000.0;
+
+        // If value is greater than 0.005 and less than 0.01, round up to 0.01
+        if (value > 0.005 && value < 0.01) {
+            value = 0.01;
+        }
+
+        return value;
     }
 
     // Getter for the cash map
